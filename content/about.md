@@ -11,7 +11,7 @@ I studied computer science at RWTH Aachen University, focusing on machine learni
 
 Outside work I run a homelab on Proxmox: Docker services, network-wide DNS with Pi-hole, WireGuard for remote access, Home Assistant, and local language models through Ollama.
 
-I'm growing into cloud, infrastructure and DevOps engineering, and I'll write about what I learn along the way under [Articles](/articles/).
+I'm growing into cloud, infrastructure and DevOps engineering, and I'll write about what I learn along the way on my [blog](/blog/).
 
 I speak German, English and Arabic.
 

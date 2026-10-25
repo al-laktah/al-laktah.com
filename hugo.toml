@@ -38,11 +38,11 @@ disableKinds = ["taxonomy", "term"]
     pageRef = "/projects"
     weight = 30
   [[menus.main]]
-    name = "Articles"
-    pageRef = "/articles"
+    name = "Blog"
+    pageRef = "/blog"
     weight = 40
 
-# Only the articles section gets an RSS feed (at /articles/index.xml).
+# RSS feeds for sections (the blog's is at /blog/index.xml), none for the home page.
 [outputs]
   home = ["html"]
   section = ["html", "rss"]

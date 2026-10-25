@@ -1,14 +1,22 @@
 {{ define "main" }}
   <section class="intro">
-    {{ .Content }}
-    {{ partial "socials.html" . }}
+    {{/* content/photo.jpg, any size: it's resized here. Delete the file to hide the photo. */}}
+    {{ with .Resources.GetMatch "photo.*" }}
+      {{ with .Resize "320x" }}
+        <img class="photo" src="{{ .RelPermalink }}" width="{{ div .Width 2 }}" height="{{ div .Height 2 }}" alt="Photo of {{ site.Params.author }}">
+      {{ end }}
+    {{ end }}
+    <div>
+      {{ .Content }}
+      {{ partial "socials.html" . }}
+    </div>
   </section>
 
-  {{ with where site.RegularPages "Section" "articles" }}
+  {{ with where site.RegularPages "Section" "blog" }}
     <section>
-      <h2>Recent articles</h2>
+      <h2>Recent posts</h2>
       {{ partial "article-list.html" (.ByDate.Reverse | first 5) }}
-      <p><a href="{{ "articles/" | relURL }}">All articles →</a></p>
+      <p><a href="{{ "blog/" | relURL }}">All posts →</a></p>
     </section>
   {{ end }}
 

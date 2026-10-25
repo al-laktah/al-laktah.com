@@ -9,16 +9,17 @@ Everything you write lives in `content/`. Each `.md` file becomes a page.
 ```
 content/
 ├── _index.md          → home page intro
+├── photo.jpg          → home page photo
 ├── about.md           → /about/
 ├── projects/
 │   ├── _index.md      → /projects/ (intro text above the list)
 │   └── my-project.md  → /projects/my-project/
-└── articles/
-    ├── _index.md      → /articles/ (intro text above the list)
-    └── my-post.md     → /articles/my-post/
+└── blog/
+    ├── _index.md      → /blog/ (intro text above the list)
+    └── my-post.md     → /blog/my-post/
 ```
 
-**Write a new article:** create `content/articles/some-title.md`:
+**Write a blog post:** create `content/blog/some-title.md`:
 
 ```markdown
 ---
@@ -27,7 +28,7 @@ date: 2026-10-25
 description: "One sentence, used in link previews and search results."
 ---
 
-Your article in Markdown…
+Your post in Markdown…
 ```
 
 **Add a project:** create `content/projects/some-project.md`:
@@ -48,12 +49,14 @@ Longer write-up…
 
 **Update the About page or home intro:** edit `about.md` or `_index.md`.
 
+**Change the photo:** replace `content/photo.jpg`. Any size works since it's resized automatically; a portrait crop looks best. Delete it to hide the photo.
+
 **Update the CV:** save the new export as `static/cv.pdf` (served at `/cv.pdf`). The *CV* menu link and the About page point straight at it. Keep file names in `static/` lowercase: Hugo lowercases menu links and GitHub Pages URLs are case-sensitive.
 
 **Images:** turn the post into a folder and put images next to it:
 
 ```
-content/articles/some-title/
+content/blog/some-title/
 ├── index.md       ← the post itself
 └── diagram.png    ← use ![Alt text](diagram.png) in index.md
 ```
@@ -76,7 +79,7 @@ hugo server -D         # http://localhost:1313, live-reloads; -D includes drafts
 Optional shortcut that creates a file with the front matter pre-filled (as a draft):
 
 ```sh
-hugo new content articles/some-title.md
+hugo new content blog/some-title.md
 hugo new content projects/some-project.md
 ```
 

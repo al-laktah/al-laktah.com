@@ -96,9 +96,11 @@ th, td { text-align: left; padding: 0.4rem 0.6rem; border-bottom: 1px solid var(
 
 .meta { color: var(--muted); font-size: 0.95rem; display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; }
 
-.intro { font-size: 1.15rem; }
+.intro { display: flex; align-items: center; gap: 2rem; font-size: 1.15rem; }
+.photo { flex: 0 0 auto; width: 9rem; height: auto; border-radius: 12px; }
 
 @media (max-width: 30rem) {
+  .intro { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
   .article-list li { flex-direction: column; gap: 0; }
   .article-list time { flex-basis: auto; font-size: 0.9rem; }
 }

@@ -3,7 +3,7 @@
     <header>
       <h1>{{ .Title }}</h1>
 
-      {{ if eq .Section "articles" }}
+      {{ if eq .Section "blog" }}
         <p class="meta">
           <span><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time> · {{ .ReadingTime }} min read</span>
         </p>
