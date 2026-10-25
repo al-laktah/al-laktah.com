@@ -15,4 +15,4 @@ I'm growing into cloud, infrastructure and DevOps engineering, and I'll write ab
 
 I speak German, English and Arabic.
 
-[Download my CV (PDF)](/cv.pdf)
+Download my CV: [English (PDF)](/cv.pdf) · [Deutsch (PDF)](/lebenslauf.pdf)

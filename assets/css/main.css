@@ -1,22 +1,25 @@
+/* Colors: Catppuccin (https://catppuccin.com/palette), Latte in light mode, Mocha in dark mode. */
 :root {
-  --bg: #fdfdfc;
-  --text: #1f2328;
-  --muted: #646b73;
-  --border: #e3e5e8;
-  --accent: #0b5cad;
-  --code-bg: #f3f4f6;
+  --bg: #eff1f5;        /* base */
+  --text: #4c4f69;      /* text */
+  --muted: #5c5f77;     /* subtext1 (subtext0 is too low-contrast on Latte base) */
+  --border: #ccd0da;    /* surface0 */
+  --accent: #8839ef;    /* mauve */
+  --code-bg: #e6e9ef;   /* mantle */
+  --selection: rgb(124 127 147 / 0.3); /* overlay2 at 30% */
   --max-width: 42rem;
   color-scheme: light dark;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #15171a;
-    --text: #e6e7e9;
-    --muted: #9aa1a9;
-    --border: #2c3036;
-    --accent: #6cb0f5;
-    --code-bg: #22252a;
+    --bg: #1e1e2e;      /* base */
+    --text: #cdd6f4;    /* text */
+    --muted: #a6adc8;   /* subtext0 */
+    --border: #313244;  /* surface0 */
+    --accent: #cba6f7;  /* mauve */
+    --code-bg: #181825; /* mantle */
+    --selection: rgb(147 153 178 / 0.3); /* overlay2 at 30% */
   }
 }
 
@@ -31,6 +34,8 @@ body {
   font: 1.0625rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   -webkit-text-size-adjust: 100%;
 }
+
+::selection { background: var(--selection); }
 
 a { color: var(--accent); text-underline-offset: 0.15em; }
 a:hover { text-decoration-thickness: 2px; }
@@ -54,6 +59,7 @@ blockquote {
 code { font: 0.9em ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
 :not(pre) > code { background: var(--code-bg); padding: 0.1em 0.35em; border-radius: 4px; }
 pre { padding: 1rem; overflow-x: auto; border-radius: 6px; font-size: 0.9rem; line-height: 1.5; }
+.chroma { background-color: var(--code-bg); } /* overrides syntax.css so code blocks stand out from the page */
 
 table { border-collapse: collapse; width: 100%; }
 th, td { text-align: left; padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--border); }

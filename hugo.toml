@@ -52,4 +52,5 @@ disableKinds = ["taxonomy", "term"]
   unsafe = true
 
 [markup.highlight]
-  style = "github-dark"
+  # Output CSS classes; the colors live in assets/css/syntax.css (Catppuccin).
+  noClasses = false

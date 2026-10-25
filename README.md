@@ -90,7 +90,8 @@ hugo new content projects/some-project.md
 | `content/` | All pages (Markdown) |
 | `hugo.toml` | Site title, social links, menu |
 | `layouts/` | HTML templates (no third-party theme) |
-| `assets/css/main.css` | The only stylesheet |
+| `assets/css/main.css` | Layout and colors (Catppuccin Latte/Mocha, following the system light/dark setting) |
+| `assets/css/syntax.css` | Generated code-highlighting colors (see the comment at its top) |
 | `static/` | Files copied as-is (CV PDF, favicon, …) |
 | `archetypes/` | Front-matter templates used by `hugo new` |
 | `.github/workflows/deploy.yml` | Builds and deploys on every push to `main` |

@@ -5,7 +5,9 @@
 <link rel="canonical" href="{{ .Permalink }}">
 <link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
 
-{{ with resources.Get "css/main.css" | minify | fingerprint }}
+{{/* syntax.css first so main.css can override it */}}
+{{ $css := slice (resources.Get "css/syntax.css") (resources.Get "css/main.css") | resources.Concat "css/site.css" }}
+{{ with $css | minify | fingerprint }}
   <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
 {{ end }}
 
