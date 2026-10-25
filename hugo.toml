@@ -18,11 +18,12 @@ disableKinds = ["taxonomy", "term"]
   [[params.socials]]
     name = "LinkedIn"
     url = "https://www.linkedin.com/in/al-laktah/"
-  # [[params.socials]]
-  #   name = "Email"
-  #   url = "mailto:you@al-laktah.com"
+  [[params.socials]]
+    name = "Email"
+    url = "mailto:mohammed@al-laktah.com"
 
-# Top navigation. pageRef points at a file/folder under content/.
+# Top navigation. pageRef points at a file/folder under content/,
+# url at anything else (e.g. a file in static/).
 [menus]
   [[menus.main]]
     name = "About"
@@ -30,7 +31,7 @@ disableKinds = ["taxonomy", "term"]
     weight = 10
   [[menus.main]]
     name = "CV"
-    pageRef = "/cv"
+    url = "/cv.pdf"
     weight = 20
   [[menus.main]]
     name = "Projects"

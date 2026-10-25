@@ -10,7 +10,6 @@ Everything you write lives in `content/`. Each `.md` file becomes a page.
 content/
 ├── _index.md          → home page intro
 ├── about.md           → /about/
-├── cv.md              → /cv/
 ├── projects/
 │   ├── _index.md      → /projects/ (intro text above the list)
 │   └── my-project.md  → /projects/my-project/
@@ -47,7 +46,9 @@ weight: 1                      # optional: lower numbers are listed first
 Longer write-up…
 ```
 
-**Update the CV, About page or home intro:** edit `cv.md`, `about.md` or `_index.md`.
+**Update the About page or home intro:** edit `about.md` or `_index.md`.
+
+**Update the CV:** save the new export as `static/cv.pdf` (served at `/cv.pdf`). The *CV* menu link and the About page point straight at it. Keep file names in `static/` lowercase: Hugo lowercases menu links and GitHub Pages URLs are case-sensitive.
 
 **Images:** turn the post into a folder and put images next to it:
 
@@ -57,7 +58,7 @@ content/articles/some-title/
 └── diagram.png    ← use ![Alt text](diagram.png) in index.md
 ```
 
-Site-wide files (e.g. `cv.pdf`) go in `static/`; `static/cv.pdf` is served at `/cv.pdf`.
+Other site-wide files go in `static/` and are served as-is: `static/example.pdf` is at `/example.pdf`.
 
 **Drafts:** add `draft: true` to the front matter to keep a page off the live site.
 
@@ -87,7 +88,7 @@ hugo new content projects/some-project.md
 | `hugo.toml` | Site title, social links, menu |
 | `layouts/` | HTML templates (no third-party theme) |
 | `assets/css/main.css` | The only stylesheet |
-| `static/` | Files copied as-is (favicon, PDFs, …) |
+| `static/` | Files copied as-is (CV PDF, favicon, …) |
 | `archetypes/` | Front-matter templates used by `hugo new` |
 | `.github/workflows/deploy.yml` | Builds and deploys on every push to `main` |
 
@@ -98,7 +99,7 @@ There's no JavaScript, no `node_modules` and no theme to update. The only depend
 1. **Push this repo to GitHub.**
 2. **Enable Pages:** repo *Settings → Pages → Build and deployment → Source: **GitHub Actions***.
 3. **Custom domain:** in the same Pages screen, set the custom domain to `al-laktah.com` and tick *Enforce HTTPS* once the certificate is issued.
-4. **DNS** at your registrar/DNS provider (keep your existing MX/email records untouched):
+4. **DNS** Set every record below to **Proxy status: DNS only** (grey cloud); GitHub can't verify the domain or issue the HTTPS certificate through Cloudflare's proxy:
 
    | Type | Name | Value |
    | --- | --- | --- |

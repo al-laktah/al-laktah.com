@@ -96,14 +96,6 @@ th, td { text-align: left; padding: 0.4rem 0.6rem; border-bottom: 1px solid var(
 
 .meta { color: var(--muted); font-size: 0.95rem; display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; }
 
-.button {
-  display: inline-block;
-  padding: 0.4rem 0.9rem;
-  border: 1px solid var(--accent);
-  border-radius: 6px;
-  text-decoration: none;
-}
-
 .intro { font-size: 1.15rem; }
 
 @media (max-width: 30rem) {
@@ -111,11 +103,11 @@ th, td { text-align: left; padding: 0.4rem 0.6rem; border-bottom: 1px solid var(
   .article-list time { flex-basis: auto; font-size: 0.9rem; }
 }
 
-/* Printing (e.g. the CV page → "Save as PDF") */
+/* Printing */
 @media print {
   :root { --bg: #fff; --text: #000; --muted: #444; --accent: #000; }
   body { max-width: none; font-size: 11pt; }
-  .site-header nav, .site-footer, .no-print { display: none; }
+  .site-header nav, .site-footer { display: none; }
   .site-header { padding: 0 0 0.5rem; }
   a { text-decoration: none; }
   h2 { break-after: avoid; }

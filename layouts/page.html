@@ -10,11 +10,6 @@
       {{ else if eq .Section "projects" }}
         {{ partial "project-meta.html" . }}
       {{ end }}
-
-      {{/* e.g. on the CV page: pdf: /cv.pdf (file lives in static/cv.pdf) */}}
-      {{ with .Params.pdf }}
-        <p class="no-print"><a class="button" href="{{ . | relURL }}" download>Download PDF</a></p>
-      {{ end }}
     </header>
 
     {{ .Content }}

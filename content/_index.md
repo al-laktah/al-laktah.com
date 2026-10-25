@@ -2,4 +2,4 @@
 title: "Mohammed Al-Laktah"
 ---
 
-Hi, I'm **Mohammed Al-Laktah**. Replace this with a sentence or two about what you do and what you care about.
+Hi, I'm **Mohammed Al-Laktah**, an IT systems administrator in Aachen, Germany. I work on identity, security and endpoint infrastructure, and I'm growing into cloud, infrastructure and DevOps engineering.
