@@ -1,27 +1,19 @@
-/* Colors: Catppuccin (https://catppuccin.com/palette), Latte in light mode, Mocha in dark mode. */
+/* Colors: Catppuccin (https://catppuccin.com/palette), as light-dark(Latte, Mocha).
+   light-dark() follows color-scheme: the system setting by default, or the
+   top-bar toggle's choice (data-theme on <html>). */
 :root {
-  --bg: #eff1f5;        /* base */
-  --text: #4c4f69;      /* text */
-  --muted: #5c5f77;     /* subtext1 (subtext0 is too low-contrast on Latte base) */
-  --border: #ccd0da;    /* surface0 */
-  --accent: #8839ef;    /* mauve */
-  --code-bg: #e6e9ef;   /* mantle */
-  --selection: rgb(124 127 147 / 0.3); /* overlay2 at 30% */
-  --max-width: 42rem;
   color-scheme: light dark;
+  --bg: light-dark(#eff1f5, #1e1e2e);       /* base */
+  --text: light-dark(#4c4f69, #cdd6f4);     /* text */
+  --muted: light-dark(#5c5f77, #a6adc8);    /* Latte subtext1 (subtext0 is too low-contrast), Mocha subtext0 */
+  --border: light-dark(#ccd0da, #313244);   /* surface0 */
+  --accent: light-dark(#8839ef, #cba6f7);   /* mauve */
+  --code-bg: light-dark(#e6e9ef, #181825);  /* mantle */
+  --selection: light-dark(rgb(124 127 147 / 0.3), rgb(147 153 178 / 0.3)); /* overlay2 at 30% */
+  --max-width: 42rem;
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #1e1e2e;      /* base */
-    --text: #cdd6f4;    /* text */
-    --muted: #a6adc8;   /* subtext0 */
-    --border: #313244;  /* surface0 */
-    --accent: #cba6f7;  /* mauve */
-    --code-bg: #181825; /* mantle */
-    --selection: rgb(147 153 178 / 0.3); /* overlay2 at 30% */
-  }
-}
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
 
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -76,9 +68,15 @@ th, td { text-align: left; padding: 0.4rem 0.6rem; border-bottom: 1px solid var(
   border-bottom: 1px solid var(--border);
 }
 .site-title { font-weight: 700; color: var(--text); text-decoration: none; }
-.site-header nav { display: flex; flex-wrap: wrap; gap: 1.25rem; }
+.site-header nav { display: flex; flex-wrap: wrap; align-items: center; gap: 1.25rem; }
 .site-header nav a { color: var(--muted); text-decoration: none; }
 .site-header nav a:hover, .site-header nav a[aria-current] { color: var(--text); }
+
+/* Light/dark toggle: only shown once the script in head.html has set data-theme. */
+.theme-toggle { display: none; padding: 0; border: 0; background: none; color: var(--muted); cursor: pointer; }
+.theme-toggle:hover { color: var(--text); }
+:root[data-theme] .theme-toggle { display: inline-flex; }
+:root[data-theme="dark"] .icon-moon, :root[data-theme="light"] .icon-sun { display: none; }
 
 .site-footer {
   margin-top: 4rem;
@@ -113,7 +111,7 @@ th, td { text-align: left; padding: 0.4rem 0.6rem; border-bottom: 1px solid var(
 
 /* Printing */
 @media print {
-  :root { --bg: #fff; --text: #000; --muted: #444; --accent: #000; }
+  :root, :root[data-theme] { color-scheme: light; --bg: #fff; --text: #000; --muted: #444; --accent: #000; }
   body { max-width: none; font-size: 11pt; }
   .site-header nav, .site-footer { display: none; }
   .site-header { padding: 0 0 0.5rem; }

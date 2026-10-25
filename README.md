@@ -5,8 +5,8 @@ Source code for [al-laktah.com](https://al-laktah.com), the personal website of 
 ## How it's built
 
 - **[Hugo](https://gohugo.io)** turns plain Markdown files into a static site.
-- **No theme, no JavaScript, no npm.** A handful of hand-written templates and one stylesheet.
-- **[Catppuccin](https://catppuccin.com) colors:** Latte in light mode and Mocha in dark mode, following the visitor's system setting. Code blocks use the matching Catppuccin highlighting styles.
+- **No theme, no npm, barely any JavaScript.** Hand-written templates and CSS, plus a few lines of script for the light/dark toggle.
+- **[Catppuccin](https://catppuccin.com) colors:** Latte in light mode and Mocha in dark mode. The site follows the visitor's system setting, and a sun/moon button in the top bar overrides it. Code blocks use the matching Catppuccin highlighting styles.
 - **GitHub Pages:** a GitHub Actions workflow builds the site and deploys it on every push to `main`.
 
 ## Repository layout

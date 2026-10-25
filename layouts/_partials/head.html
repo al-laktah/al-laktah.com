@@ -5,6 +5,27 @@
 <link rel="canonical" href="{{ .Permalink }}">
 <link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
 
+{{/* Light/dark toggle. Runs before the page renders so there's no flash of the wrong theme.
+     A choice is only saved when it differs from the system setting. */}}
+<script>
+  (() => {
+    const root = document.documentElement;
+    const media = matchMedia("(prefers-color-scheme: dark)");
+    const system = () => (media.matches ? "dark" : "light");
+    const saved = () => { try { return localStorage.getItem("theme"); } catch { return null; } };
+
+    root.dataset.theme = saved() || system();
+    media.addEventListener("change", () => { if (!saved()) root.dataset.theme = system(); });
+
+    document.addEventListener("click", (event) => {
+      if (!event.target.closest(".theme-toggle")) return;
+      const next = root.dataset.theme === "dark" ? "light" : "dark";
+      root.dataset.theme = next;
+      try { next === system() ? localStorage.removeItem("theme") : localStorage.setItem("theme", next); } catch {}
+    });
+  })();
+</script>
+
 {{/* syntax.css first so main.css can override it */}}
 {{ $css := slice (resources.Get "css/syntax.css") (resources.Get "css/main.css") | resources.Concat "css/site.css" }}
 {{ with $css | minify | fingerprint }}
