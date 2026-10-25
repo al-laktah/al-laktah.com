@@ -23,7 +23,7 @@ I originally built it in 2021 for shorti.xyz. In 2026 I brought it back online: 
 
 Docker Compose runs two containers: the Flask API, and a Caddy server that serves the React build and forwards `/api/` requests to it. In front of them, a shared Caddy proxy handles HTTPS, so other services can run on the same server.
 
-It all runs on the Oracle Cloud Always Free Arm VM from my [al-laktah-cloud](/projects/al-laktah-cloud/) project, which sets up the server with Terraform.
+It all runs on the Oracle Cloud Always Free Arm VM from my [al-laktah-cloud](/projects/al-laktah-cloud/) project, which sets up the server with Terraform, backs up Shorti's database every night and monitors the site from a second VM.
 
 ## Next steps
 
