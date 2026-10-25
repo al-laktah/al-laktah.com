@@ -10,8 +10,9 @@ disableKinds = ["taxonomy", "term"]
   author = "Mohammed Al-Laktah"
   description = "Personal website of Mohammed Al-Laktah."
 
-  # Social links, shown on the home page and in the footer.
-  # Add, remove or reorder entries freely.
+  # Social links, shown as icons on the home page and in the footer.
+  # Add, remove or reorder entries freely. The icon is picked by name from
+  # layouts/_partials/icon.html; names without an icon show as text.
   [[params.socials]]
     name = "GitHub"
     url = "https://github.com/al-laktah/"

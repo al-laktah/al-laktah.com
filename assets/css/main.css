@@ -87,7 +87,9 @@ th, td { text-align: left; padding: 0.4rem 0.6rem; border-bottom: 1px solid var(
 }
 .site-footer p { margin: 0.5rem 0 0; }
 
+.icon { width: 1.25em; height: 1.25em; }
 .socials { display: flex; flex-wrap: wrap; gap: 1rem; list-style: none; padding: 0; margin: 1rem 0; }
+.socials a { display: inline-flex; }
 
 /* Lists */
 .article-list, .project-list { list-style: none; padding: 0; }

@@ -1,7 +1,7 @@
 {{ with site.Params.socials }}
   <ul class="socials">
     {{ range . }}
-      <li><a href="{{ .url }}" rel="me noopener">{{ .name }}</a></li>
+      <li><a href="{{ .url }}" rel="me noopener" aria-label="{{ .name }}" title="{{ .name }}">{{ partial "icon.html" .name }}</a></li>
     {{ end }}
   </ul>
 {{ end }}
