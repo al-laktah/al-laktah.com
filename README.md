@@ -1,120 +1,54 @@
 # al-laktah.com
 
-My personal website, built with [Hugo](https://gohugo.io) from plain Markdown files and hosted on GitHub Pages.
+Source code for [al-laktah.com](https://al-laktah.com), the personal website of Mohammed Al-Laktah: about, CV, projects and blog.
 
-## Day to day: editing content
+## How it's built
 
-Everything you write lives in `content/`. Each `.md` file becomes a page.
+- **[Hugo](https://gohugo.io)** turns plain Markdown files into a static site.
+- **No theme, no JavaScript, no npm.** A handful of hand-written templates and one stylesheet.
+- **[Catppuccin](https://catppuccin.com) colors:** Latte in light mode and Mocha in dark mode, following the visitor's system setting. Code blocks use the matching Catppuccin highlighting styles.
+- **GitHub Pages:** a GitHub Actions workflow builds the site and deploys it on every push to `main`.
 
-```
-content/
-├── _index.md          → home page intro
-├── photo.jpg          → home page photo
-├── about.md           → /about/
-├── projects/
-│   ├── _index.md      → /projects/ (intro text above the list)
-│   └── my-project.md  → /projects/my-project/
-└── blog/
-    ├── _index.md      → /blog/ (intro text above the list)
-    └── my-post.md     → /blog/my-post/
-```
-
-**Write a blog post:** create `content/blog/some-title.md`:
-
-```markdown
----
-title: "Some Title"
-date: 2026-10-25
-description: "One sentence, used in link previews and search results."
----
-
-Your post in Markdown…
-```
-
-**Add a project:** create `content/projects/some-project.md`:
-
-```markdown
----
-title: "Some Project"
-date: 2026-10-25
-description: "One-line summary shown in the project list."
-stack: ["Python", "AWS"]       # optional
-repo: "https://github.com/…"   # optional
-url: "https://…"               # optional
-weight: 1                      # optional: lower numbers are listed first
----
-
-Longer write-up…
-```
-
-**Update the About page or home intro:** edit `about.md` or `_index.md`.
-
-**Change the photo:** replace `content/photo.jpg`. Any size works since it's resized automatically; a portrait crop looks best. Delete it to hide the photo.
-
-**Update the CV:** save the new export as `static/cv.pdf` (served at `/cv.pdf`). The *CV* menu link and the About page point straight at it. Keep file names in `static/` lowercase: Hugo lowercases menu links and GitHub Pages URLs are case-sensitive.
-
-**Images:** turn the post into a folder and put images next to it:
+## Repository layout
 
 ```
-content/blog/some-title/
-├── index.md       ← the post itself
-└── diagram.png    ← use ![Alt text](diagram.png) in index.md
+.
+├── content/              Pages, written in Markdown
+│   ├── _index.md         Home page intro (photo.jpg sits next to it)
+│   ├── about.md
+│   ├── projects/         One file per project
+│   └── blog/             One file per post, or a folder for posts with images
+├── layouts/              HTML templates
+├── assets/css/           main.css (layout and colors) and syntax.css (generated code highlighting)
+├── static/               Files served as-is: CVs, favicon
+├── archetypes/           Front matter templates used by `hugo new`
+├── hugo.toml             Site config: title, menu, social links
+└── .github/workflows/    Build and deploy to GitHub Pages
 ```
 
-Other site-wide files go in `static/` and are served as-is: `static/example.pdf` is at `/example.pdf`.
+## Running locally
 
-**Drafts:** add `draft: true` to the front matter to keep a page off the live site.
-
-**Social links and menu:** edit `hugo.toml`. These rarely change.
-
-Commit and push to `main`, and the site rebuilds and goes live in about a minute.
-
-## Preview locally
+Install [Hugo](https://gohugo.io/installation/) (the deploy workflow pins the exact version, see `HUGO_VERSION`), then:
 
 ```sh
-brew install hugo      # once
-hugo server -D         # http://localhost:1313, live-reloads; -D includes drafts
+hugo server -D               # live-reloading preview at http://localhost:1313, including drafts
+hugo build --gc --minify     # production build into public/
 ```
 
-Optional shortcut that creates a file with the front matter pre-filled (as a draft):
+## Content
 
-```sh
-hugo new content blog/some-title.md
-hugo new content projects/some-project.md
-```
+Every Markdown file under `content/` becomes a page, with settings in its front matter:
 
-## How it's put together
+| Field | Used by | Purpose |
+| --- | --- | --- |
+| `title`, `date` | all pages | Page title and publish date |
+| `description` | all pages | Summary for search results and link previews, also shown in the project list |
+| `draft: true` | all pages | Kept out of the production build |
+| `stack`, `repo`, `url` | projects | Technologies used, source link and website link |
+| `weight` | projects | Sort order; lower numbers come first |
 
-| Path | What it is |
-| --- | --- |
-| `content/` | All pages (Markdown) |
-| `hugo.toml` | Site title, social links, menu |
-| `layouts/` | HTML templates (no third-party theme) |
-| `assets/css/main.css` | Layout and colors (Catppuccin Latte/Mocha, following the system light/dark setting) |
-| `assets/css/syntax.css` | Generated code-highlighting colors (see the comment at its top) |
-| `static/` | Files copied as-is (CV PDF, favicon, …) |
-| `archetypes/` | Front-matter templates used by `hugo new` |
-| `.github/workflows/deploy.yml` | Builds and deploys on every push to `main` |
+`hugo new content blog/my-post.md` or `hugo new content projects/my-project.md` creates a new draft with the front matter ready to fill in.
 
-There's no JavaScript, no `node_modules` and no theme to update. The only dependency is the Hugo version pinned in `deploy.yml`.
+## License
 
-## One-time setup
-
-1. **Push this repo to GitHub.**
-2. **Enable Pages:** repo *Settings → Pages → Build and deployment → Source: **GitHub Actions***.
-3. **Custom domain:** in the same Pages screen, set the custom domain to `al-laktah.com` and tick *Enforce HTTPS* once the certificate is issued.
-4. **DNS** Set every record below to **Proxy status: DNS only** (grey cloud); GitHub can't verify the domain or issue the HTTPS certificate through Cloudflare's proxy:
-
-   | Type | Name | Value |
-   | --- | --- | --- |
-   | A | `@` | `185.199.108.153` |
-   | A | `@` | `185.199.109.153` |
-   | A | `@` | `185.199.110.153` |
-   | A | `@` | `185.199.111.153` |
-   | AAAA | `@` | `2606:50c0:8000::153` |
-   | AAAA | `@` | `2606:50c0:8001::153` |
-   | AAAA | `@` | `2606:50c0:8002::153` |
-   | AAAA | `@` | `2606:50c0:8003::153` |
-   | CNAME | `www` | `<your-github-username>.github.io` |
-
-5. **Verify the domain** in your GitHub account settings (*Settings → Pages → Verified domains*) so no one else can claim it.
+The templates and styles in `layouts/` and `assets/` are [MIT licensed](LICENSE), so feel free to reuse them. Everything else, including the writing, photo and CVs, is © Mohammed Al-Laktah and may not be reused without permission.
