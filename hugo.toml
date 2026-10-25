@@ -31,16 +31,16 @@ disableKinds = ["taxonomy", "term"]
     pageRef = "/about"
     weight = 10
   [[menus.main]]
-    name = "CV"
-    url = "/cv.pdf"
+    name = "Blog"
+    pageRef = "/blog"
     weight = 20
   [[menus.main]]
     name = "Projects"
     pageRef = "/projects"
     weight = 30
   [[menus.main]]
-    name = "Blog"
-    pageRef = "/blog"
+    name = "CV"
+    url = "/cv.pdf"
     weight = 40
 
 # RSS feeds for sections (the blog's is at /blog/index.xml), none for the home page.
@@ -49,7 +49,7 @@ disableKinds = ["taxonomy", "term"]
   section = ["html", "rss"]
 
 [markup.goldmark.renderer]
-  # Allow raw HTML inside Markdown (e.g. embeds). Safe because only you write content.
+  # Allow raw HTML inside Markdown (e.g. embeds). Safe because only I write content.
   unsafe = true
 
 [markup.highlight]
