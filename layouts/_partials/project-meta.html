@@ -1,8 +1,9 @@
-{{/* Optional project front matter: stack (list), url, repo. */}}
-{{ if or .Params.stack .Params.url .Params.repo }}
+{{/* Optional project front matter: stack (list), website, repo.
+     ("website", not "url": Hugo reserves url for the page's own address.) */}}
+{{ if or .Params.stack .Params.website .Params.repo }}
   <p class="meta">
     {{ with .Params.stack }}<span>{{ delimit . " · " }}</span>{{ end }}
-    {{ with .Params.url }}<a href="{{ . }}">Website</a>{{ end }}
+    {{ with .Params.website }}<a href="{{ . }}">Website</a>{{ end }}
     {{ with .Params.repo }}<a href="{{ . }}">Source</a>{{ end }}
   </p>
 {{ end }}

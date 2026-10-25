@@ -4,6 +4,6 @@ date: {{ .Date }}
 description: ""
 stack: []
 repo: ""
-url: ""
+website: ""
 draft: true
 ---

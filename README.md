@@ -44,7 +44,7 @@ Every Markdown file under `content/` becomes a page, with settings in its front 
 | `title`, `date` | all pages | Page title and publish date |
 | `description` | all pages | Summary for search results and link previews, also shown in the project list |
 | `draft: true` | all pages | Kept out of the production build |
-| `stack`, `repo`, `url` | projects | Technologies used, source link and website link |
+| `stack`, `repo`, `website` | projects | Technologies used, source link and website link |
 | `weight` | projects | Sort order; lower numbers come first |
 
 `hugo new content blog/my-post.md` or `hugo new content projects/my-project.md` creates a new draft with the front matter ready to fill in.
