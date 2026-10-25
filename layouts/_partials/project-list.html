@@ -1,0 +1,9 @@
+<ul class="project-list">
+  {{ range . }}
+    <li>
+      <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+      {{ with .Description }}<p>{{ . }}</p>{{ end }}
+      {{ partial "project-meta.html" . }}
+    </li>
+  {{ end }}
+</ul>

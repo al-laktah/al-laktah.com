@@ -1,0 +1,54 @@
+baseURL = "https://al-laktah.com/"
+locale = "en"
+title = "Mohammed Al-Laktah"
+enableRobotsTXT = true
+
+# Keep the site small: no auto-generated tag/category pages.
+disableKinds = ["taxonomy", "term"]
+
+[params]
+  author = "Mohammed Al-Laktah"
+  description = "Personal website of Mohammed Al-Laktah."
+
+  # Social links, shown on the home page and in the footer.
+  # Add, remove or reorder entries freely.
+  [[params.socials]]
+    name = "GitHub"
+    url = "https://github.com/al-laktah/"
+  [[params.socials]]
+    name = "LinkedIn"
+    url = "https://www.linkedin.com/in/al-laktah/"
+  # [[params.socials]]
+  #   name = "Email"
+  #   url = "mailto:you@al-laktah.com"
+
+# Top navigation. pageRef points at a file/folder under content/.
+[menus]
+  [[menus.main]]
+    name = "About"
+    pageRef = "/about"
+    weight = 10
+  [[menus.main]]
+    name = "CV"
+    pageRef = "/cv"
+    weight = 20
+  [[menus.main]]
+    name = "Projects"
+    pageRef = "/projects"
+    weight = 30
+  [[menus.main]]
+    name = "Articles"
+    pageRef = "/articles"
+    weight = 40
+
+# Only the articles section gets an RSS feed (at /articles/index.xml).
+[outputs]
+  home = ["html"]
+  section = ["html", "rss"]
+
+[markup.goldmark.renderer]
+  # Allow raw HTML inside Markdown (e.g. embeds). Safe because only you write content.
+  unsafe = true
+
+[markup.highlight]
+  style = "github-dark"

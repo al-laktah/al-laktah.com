@@ -1,0 +1,22 @@
+{{ define "main" }}
+  <section class="intro">
+    {{ .Content }}
+    {{ partial "socials.html" . }}
+  </section>
+
+  {{ with where site.RegularPages "Section" "articles" }}
+    <section>
+      <h2>Recent articles</h2>
+      {{ partial "article-list.html" (.ByDate.Reverse | first 5) }}
+      <p><a href="{{ "articles/" | relURL }}">All articles →</a></p>
+    </section>
+  {{ end }}
+
+  {{ with where site.RegularPages "Section" "projects" }}
+    <section>
+      <h2>Projects</h2>
+      {{ partial "project-list.html" (first 3 .) }}
+      <p><a href="{{ "projects/" | relURL }}">All projects →</a></p>
+    </section>
+  {{ end }}
+{{ end }}

@@ -1,0 +1,22 @@
+{{ define "main" }}
+  <article>
+    <header>
+      <h1>{{ .Title }}</h1>
+
+      {{ if eq .Section "articles" }}
+        <p class="meta">
+          <span><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time> · {{ .ReadingTime }} min read</span>
+        </p>
+      {{ else if eq .Section "projects" }}
+        {{ partial "project-meta.html" . }}
+      {{ end }}
+
+      {{/* e.g. on the CV page: pdf: /cv.pdf (file lives in static/cv.pdf) */}}
+      {{ with .Params.pdf }}
+        <p class="no-print"><a class="button" href="{{ . | relURL }}" download>Download PDF</a></p>
+      {{ end }}
+    </header>
+
+    {{ .Content }}
+  </article>
+{{ end }}

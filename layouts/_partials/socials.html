@@ -1,0 +1,7 @@
+{{ with site.Params.socials }}
+  <ul class="socials">
+    {{ range . }}
+      <li><a href="{{ .url }}" rel="me noopener">{{ .name }}</a></li>
+    {{ end }}
+  </ul>
+{{ end }}
