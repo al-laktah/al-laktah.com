@@ -14,7 +14,7 @@ disableKinds = ["taxonomy", "term"]
   # website is the site's ID in Umami; leave it empty to turn tracking off.
   [params.umami]
     script = "https://umami.al-laktah.com/script.js"
-    website = ""
+    website = "a1472a14-ae0c-4b18-b680-391809e83264"
 
   # Social links, shown as icons on the home page and in the footer.
   # Add, remove or reorder entries freely. The icon is picked by name from
