@@ -40,3 +40,11 @@
 
 {{/* Link previews when shared on social media / chat apps. */}}
 {{ partial "opengraph.html" . }}
+
+{{/* Visit statistics (params.umami in hugo.toml), only in production builds so local
+     previews aren't counted. data-domains keeps out copies of the site elsewhere. */}}
+{{ with site.Params.umami }}
+  {{ if and .website hugo.IsProduction }}
+    <script defer src="{{ .script }}" data-website-id="{{ .website }}" data-domains="{{ (urls.Parse site.BaseURL).Hostname }}" data-do-not-track="true"></script>
+  {{ end }}
+{{ end }}

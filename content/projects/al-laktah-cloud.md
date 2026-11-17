@@ -1,21 +1,22 @@
 ---
 title: "al-laktah-cloud"
 date: 2026-10-25
-description: "My personal cloud on Oracle Cloud's Always Free tier: Terraform-built VMs, Docker Compose services behind Caddy, a self-hosted NetBird VPN, nightly encrypted backups and outside monitoring, at no cost."
+description: "My personal cloud on Oracle Cloud's Always Free tier: Terraform-built VMs, Docker Compose services behind Caddy, a self-hosted NetBird VPN that keeps SSH and private sites off the internet, nightly encrypted backups and outside monitoring, at no cost."
 stack: ["Terraform", "Oracle Cloud (OCI)", "Docker Compose", "Caddy", "NetBird", "restic", "Gatus", "1Password"]
 repo: "https://github.com/al-laktah/al-laktah-cloud"
 ---
 
-My personal cloud on Oracle Cloud's Always Free tier, at no cost. Terraform builds the infrastructure, the services run as Docker Compose stacks behind Caddy and are backed up every night, a second, tiny VM watches it all from outside, and a third runs my NetBird VPN server.
+My personal cloud on Oracle Cloud's Always Free tier, at no cost. Terraform builds the infrastructure, the services run as Docker Compose stacks behind Caddy and are backed up every night, a second, tiny VM watches it all from outside, and a third runs my NetBird VPN server. Only sign-in and the VPN itself face the internet: SSH and the private sites answer only over the VPN.
 
 ## Infrastructure
 
 - **Main VM:** an Ampere A1 (Arm) VM with 2 OCPUs, 12 GB RAM and a 50 GB boot volume, running Ubuntu 24.04.
 - **Micro VMs:** two AMD micro VMs with 1/8 OCPU and 1 GB RAM each. One is the watchtower, which monitors the main VM and verifies the backups; the other runs the NetBird VPN server.
-- **Network:** a dedicated VCN with a public subnet and a security list that lets SSH, HTTP and HTTPS (including HTTP/3) in. The NetBird VM gets its own network security group, which opens STUN's UDP port on that VM only. SSH logins are key-only, YubiKey security keys included.
+- **Network:** a dedicated VCN with a public subnet. The subnet's security list lets SSH in only from inside the VCN, and each VM gets just the ports it needs through network security groups: HTTPS for the VMs that serve public sites, STUN for NetBird and WireGuard for all three. SSH logins are key-only, YubiKey security keys included.
 - **DNS:** Cloudflare A records for the VMs and for each website, all following the VMs' public IPs.
 - **Storage:** three Object Storage buckets: Terraform state, the main VM's backups and NetBird's backups. A separate bootstrap config creates them, so they outlive any rebuild of the VMs.
-- **Access:** the VMs sign in to OCI as *instance principals*, so none of them holds any cloud credentials.
+- **Cloud credentials:** the VMs sign in to OCI as *instance principals*, so none of them holds any.
+- **Break-glass access:** an OCI Bastion can open an SSH session to any VM from inside the VCN, for when NetBird itself is down.
 
 Everything fits inside the Always Free allowance: the whole A1 allowance, both AMD micro VMs and 150 of the 200 GB of block storage.
 
@@ -32,6 +33,8 @@ A setup script prepares each VM (updates, its own firewall, Docker, log rotation
 
 The second micro VM runs [NetBird](https://netbird.io)'s control server for a WireGuard mesh between my devices. It signs them in and helps them find each other; their traffic flows directly between them, and only goes through the server's relay when no direct connection is possible. The stack runs the NetBird server (management, signal, relay and STUN in one process), its dashboard, and a Caddy of its own for HTTPS.
 
+All three VMs join the mesh too, so day to day I reach SSH, the wiki and Shorti over the VPN. Everyone else gets nothing: OCI's firewalls only let SSH in from the VCN, and Caddy answers the private sites with a 403 unless the request comes from a NetBird address. Their names stay in public DNS, so certificates keep renewing.
+
 Devices sign in through NetBird's built-in identity provider or through Pocket ID. The built-in admin account stays as a fallback, so I can still get in when the main VM, and with it Pocket ID, is down.
 
 ## Backups
@@ -42,7 +45,7 @@ Every night, a backup stack on the main VM dumps Outline's Postgres database and
 
 The watchtower runs two containers:
 
-- **Gatus** checks the sites and the NetBird server over HTTPS and the main VM's SSH port every minute. It alerts my phone through ntfy after three failed checks in a row, or when a certificate has less than 10 days left.
+- **Gatus** checks every minute: the public endpoints from outside, and the private sites and the main VM's SSH port across the VCN. It alerts my phone through ntfy after three failed checks in a row, or when a certificate has less than 10 days left.
 - **backup-check** verifies both sets of backups every day, read-only: the latest one must be under 26 hours old, `restic check` re-reads a different quarter of the data each day (all of it every 4 days), and the databases are restored to prove they load, with Outline's dump going into a throwaway Postgres.
 
 If a daily check stops reporting, a heartbeat in Gatus raises an alert. If the watchtower itself goes quiet, an external dead man's switch notices.
@@ -52,6 +55,7 @@ If a daily check stops reporting, a heartbeat in Gatus raises an alert. If the w
 - **Two providers wired together.** The DNS records point at the VMs' IPs, so if a VM is rebuilt, the same `apply` updates DNS.
 - **Guard rails as code.** Variable validation rejects anything beyond the free tier and catches malformed IDs and hostnames before any API call is made.
 - **Remote state done properly.** The state bucket is bootstrapped separately to solve the chicken-and-egg problem, versioned for recovery, locked against concurrent runs and protected with `prevent_destroy`.
+- **Almost nothing exposed.** Only sign-in and the VPN server face the internet. SSH and the private sites answer only to NetBird addresses, enforced by OCI's firewalls for SSH and by Caddy for the sites, with an OCI Bastion as the way in that doesn't depend on the VPN.
 - **Least privilege.** Each VM can write only to its own backups bucket, so the NetBird VM, the most exposed one, can't reach the main VM's backups. The watchtower can only read, so it can't damage what it checks.
 - **Backups you can restore from.** Consistent database copies, encrypted and deduplicated, and proven restorable every day on a separate machine.
 - **Config changes that take effect.** `docker compose up -d` only recreates a container when its own definition changes, not when a config file it reads does. `deploy.sh` fingerprints each stack's files and secrets, so any change restarts the containers that depend on them.

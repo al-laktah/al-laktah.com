@@ -10,6 +10,12 @@ disableKinds = ["taxonomy", "term"]
   author = "Mohammed Al-Laktah"
   description = "Personal website of Mohammed Al-Laktah."
 
+  # Visit statistics with self-hosted Umami (no cookies), on the live site only.
+  # website is the site's ID in Umami; leave it empty to turn tracking off.
+  [params.umami]
+    script = "https://umami.al-laktah.com/script.js"
+    website = ""
+
   # Social links, shown as icons on the home page and in the footer.
   # Add, remove or reorder entries freely. The icon is picked by name from
   # layouts/_partials/icon.html; names without an icon show as text.
